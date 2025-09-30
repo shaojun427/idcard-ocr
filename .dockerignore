@@ -1,0 +1,10 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+.env
+.env.*
+.git
+.gitignore
+frontend/node_modules

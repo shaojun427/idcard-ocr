@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Python packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Test and coverage outputs
+.pytest_cache/
+.coverage*
+htmlcov/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# Editor settings
+.vscode/
+.idea/
+*.sw?
+
+# Logs and temp files
+*.log
+*.tmp
+
+# OS specific junk
+.DS_Store
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Frontend dependencies
+node_modules/
+frontend/node_modules/

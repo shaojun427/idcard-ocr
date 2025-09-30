@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>身份证 OCR 测试</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      .field { margin-bottom: 1rem; }
+      pre { background: #f5f5f5; padding: 1rem; border-radius: 0.5rem; overflow: auto; }
+      button { padding: 0.5rem 1rem; font-size: 1rem; }
+    </style>
+  </head>
+  <body>
+    <h1>身份证 OCR 服务测试</h1>
+    <p>上传身份证正反面图片，调用 Docker 中运行的 HTTP 服务并展示识别结果。</p>
+    <form id="upload-form">
+      <div class="field">
+        <label for="api">后端 API 地址：</label>
+        <input
+          type="text"
+          id="api"
+          value="http://127.0.0.1:8080/api/v1/idcard/parse"
+          style="width: 28rem"
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="front">身份证正面：</label>
+        <input type="file" id="front" name="front_image" accept="image/*" required />
+      </div>
+      <div class="field">
+        <label for="back">身份证反面：</label>
+        <input type="file" id="back" name="back_image" accept="image/*" required />
+      </div>
+      <button type="submit">开始识别</button>
+    </form>
+    <div class="field">
+      <h2>识别结果</h2>
+      <pre id="result">等待请求...</pre>
+    </div>
+    <script>
+      const form = document.getElementById('upload-form');
+      const resultBox = document.getElementById('result');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        resultBox.textContent = '识别中...';
+        try {
+          const endpoint = document.getElementById('api').value.trim();
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            body: formData,
+          });
+          const payload = await response.json();
+          if (!response.ok) {
+            throw new Error(payload.detail || '识别失败');
+          }
+          resultBox.textContent = JSON.stringify(payload, null, 2);
+        } catch (error) {
+          resultBox.textContent = error.message;
+        }
+      });
+    </script>
+  </body>
+</html>

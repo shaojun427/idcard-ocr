@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    environment:
+      - LOG_LEVEL=DEBUG
+    command: ["uvicorn", "idcard_ocr.api.app:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]
